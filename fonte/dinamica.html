@@ -1,0 +1,95 @@
+titulo: Dinâmica confinada e indicadores de caos
+kicker: Módulo 3
+resumo: Limiar de confinamento, integração simplética, expoentes de Lyapunov no regime exponencial, SALI/GALI, análise de frequências e o momento angular como teste de isotropia.
+
+<p class="lead">Este módulo descreve as ferramentas numéricas: como garantir que a partícula fica num poço,
+como integrar sem destruir a estrutura hamiltoniana e como distinguir, de forma confiável, órbitas regulares
+de caóticas.</p>
+
+<h2 id="confinamento">Confinamento: a energia de sela \(E_{\rm sep}\)</h2>
+<p>Para que a partícula nunca deixe o poço da origem, a energia deve ficar abaixo do menor valor de \(V\) ao
+longo de qualquer caminho até outro mínimo — o <b>valor de passo de montanha</b>. Ele é atingido num ponto
+crítico que não é mínimo (teorema do passo de montanha, Ambrosetti e Rabinowitz, 1973). Definimos</p>
+\[
+E_{\rm sep}=\min\{V(\mathbf x):\ \nabla V(\mathbf x)=0,\ \mathbf x\ \text{não é mínimo},\ V(\mathbf x)>0\}.
+\]
+<h3>Como encontramos os pontos críticos</h3>
+<ul>
+<li><b>Meios-períodos são pontos críticos exatos.</b> Se \(\mathbf p\) é um período, \(V(\mathbf p/2+\mathbf x)=V(-\mathbf p/2-\mathbf x)=V(\mathbf p/2-\mathbf x)\)
+(paridade e periodicidade), logo \(\nabla V(\mathbf p/2)=0\).</li>
+<li>Sementes também nos máximos de \(V\) ao longo dos segmentos \(s\,\mathbf p\), \(s\in[0,1]\), e em pontos
+aleatórios da célula; cada semente é refinada por Newton híbrido com o Hessiano exato.</li>
+<li>O tipo do ponto crítico (índice de Morse) vem dos autovalores do Hessiano; autovalores nulos indicam selas
+degeneradas (no FCC, por exemplo, há uma variedade contínua de selas em \(E=4\)).</li>
+<li><b>Cota de controle:</b> \(\mathrm{UB}=\min_{\mathbf p}\max_s V(s\mathbf p)\) sobre os períodos curtos.
+Sempre \(E_{\rm sep}\le\mathrm{UB}\); se a busca encontrasse algo acima, uma sela teria sido perdida.</li>
+</ul>
+<p>Os períodos do potencial formam o reticulado \(2\pi(\mathrm{span}_\Z S)^*\). Obtemos uma base inteira por
+forma normal de Hermite e a reduzimos por LLL (Lenstra, Lenstra e Lovász, 1982), o que torna a enumeração dos
+períodos curtos eficiente até \(N=8\).</p>
+
+<h2 id="integracao">Integração simplética e mapa tangente</h2>
+<p>Usamos Velocity-Verlet (Verlet, 1967), simplético de segunda ordem: o erro de energia não deriva e fica em
+\(|\Delta H/H|\sim10^{-5}\) com passo \(h=0{,}01\)–\(0{,}02\) (Hairer, Lubich e Wanner, 2006). Os vetores
+tangentes \(\delta\mathbf z=(\delta\mathbf r,\delta\mathbf p)\) evoluem pela <em>derivada exata do mapa
+discreto</em>:</p>
+\[
+\delta\mathbf p\leftarrow\delta\mathbf p-\tfrac h2 H(\mathbf r_n)\,\delta\mathbf r,\quad
+\delta\mathbf r\leftarrow\delta\mathbf r+h\,\delta\mathbf p,\quad
+\delta\mathbf p\leftarrow\delta\mathbf p-\tfrac h2 H(\mathbf r_{n+1})\,\delta\mathbf r,
+\qquad H=\sum_{\mathbf k}\mathbf k\mathbf k^{\mathsf T}\cos(\mathbf k\cdot\mathbf r).
+\]
+<p>Assim os expoentes calculados são exatamente os do mapa simplético, sem erro de consistência. Todas as
+órbitas de uma energia são integradas em lote (vetorização em NumPy). As condições iniciais ficam na seção
+\(r_N=0\), \(p_N>0\), dentro do poço da origem.</p>
+
+<h2 id="lyapunov">Expoentes de Lyapunov no regime exponencial</h2>
+<p>O espectro é obtido pelo método de Benettin e colaboradores (1980): \(k\) vetores tangentes são
+reortonormalizados por QR a cada \(\Delta t=1\), e o crescimento acumulado
+\(S_i(t)=\sum\ln R_{ii}\) dá \(\lambda_i=\lim S_i(t)/t\). A entropia de Kolmogorov–Sinai segue da fórmula de
+Pesin, \(h_{KS}=\sum_{\lambda_i>0}\lambda_i\).</p>
+<div class="box warn"><span class="tit">Cuidado: só conta o regime exponencial</span>
+Antes do crescimento exponencial dominar, o vetor tangente cresce polinomialmente (cisalhamento) e
+\(S_1(t)/t\sim\ln t/t\). A média corrida desde \(t=0\) carrega esse transiente para sempre. Por isso
+medimos \(\lambda_1\) em <b>janelas</b>, só depois do início do regime exponencial:
+\[
+t^*=\max\Bigl\{\min\{t:\ S_1(t)-\ln(1+t)>10\},\ 10/\lambda_1\Bigr\},\qquad
+\lambda_1^{(j)}=\frac{S_1(t_{j+1})-S_1(t_j)}{t_{j+1}-t_j},\quad t_j\ge t^*.
+\]
+Órbitas que nunca atingem o critério não têm regime exponencial. A inclinação
+\(d\ln\lambda^{(j)}/d\ln t\) distingue saturação (\(\approx0\)) de decaimento anômalo (\(<0\)).</div>
+<p>Para a média sobre a órbita inteira também ajustamos \(\lambda(t)=\lambda_\infty+a/t+b\ln t/t\) nos últimos
+60% do tempo. O <b>piso de ruído</b> é o \(\lambda\) medido no \(\Z^N\), que é separável e portanto integrável:
+qualquer valor nesse nível é indistinguível de zero no tempo integrado.</p>
+
+<h2 id="sali">SALI e GALI</h2>
+<p>Dois vetores tangentes normalizados \(\hat w_1,\hat w_2\) evoluem juntos. O índice de alinhamento
+\(\mathrm{SALI}=\min(\|\hat w_1+\hat w_2\|,\|\hat w_1-\hat w_2\|)\) (Skokos, 2001) tende a zero como
+\(e^{-(\lambda_1-\lambda_2)t}\) em órbitas caóticas e flutua em torno de um valor positivo em órbitas regulares.
+\(\mathrm{GALI}_2=\|\hat w_1\wedge\hat w_2\|\) é a generalização (Skokos, Bountis e Antonopoulos, 2007).
+Classificamos como caótica a órbita com \(\mathrm{SALI}<10^{-8}\).</p>
+<div class="box warn"><span class="tit">Limite do critério</span>
+Atingir \(10^{-8}\) exige \(\lambda T\gtrsim18\). Com \(\lambda\sim10^{-3}\) e \(T=5000\) isso não acontece, e a
+fração caótica subestima o caos a baixa energia. Nesse regime o indicador correto é o \(\lambda\) acima do
+piso, ou integrações mais longas.</div>
+
+<h2 id="frequencias">Análise de frequências</h2>
+<p>Para cada coordenada calculamos a frequência dominante de \(z_j=r_j-ip_j\) (FFT com janela de Hann e
+interpolação parabólica do pico) nas duas metades da órbita. A difusão de frequência
+\(\Delta\nu/\nu=\max_j|\nu_j^{(2)}-\nu_j^{(1)}|/\nu_j^{(1)}\) é pequena em toros invariantes e grande em órbitas
+caóticas (Laskar, Froeschlé e Celletti, 1992; Laskar, 1993). Com frequências degeneradas, o pico dominante pode
+oscilar entre picos próximos, e por isso usamos esse indicador junto com o SALI.</p>
+
+<h2 id="momento">Momento angular: o teste direto da isotropia</h2>
+<p>Em \(N\) dimensões o momento angular é o tensor antissimétrico \(L_{ij}=r_ip_j-r_jp_i\). Seu invariante de
+rotação é</p>
+\[
+|L|^2=\sum_{i<j}L_{ij}^2=r^2p^2-(\mathbf r\cdot\mathbf p)^2,
+\]
+<p>conservado se, e somente se, o potencial é central. Medimos
+\(\delta|L|^2=(\max-\min)/(\max+\min)\) ao longo de cada órbita. É o teste mais limpo da anisotropia: num
+potencial com termo quártico central, \(|L|^2\) só varia por causa das ordens \(\ge t+1\).</p>
+<figure class="fig"><img src="img/momento_angular_2d.png" alt="Trajetórias e momento angular no quadrado e no hexagonal">
+<figcaption><b>Mesma condição inicial, \(E=0{,}5\,V_0\).</b> (a) No \(\Z^2\) o termo \(r^4\) anisotrópico exerce
+torque: a órbita preenche um retângulo e \(L\) troca de sinal. (b) No \(A_2\) o termo \(r^4\) é radial: a órbita
+é uma roseta e (c) \(L\) se conserva dentro de 0,7%. <a href="img/momento_angular_2d.gif">Versão animada</a>.</figcaption></figure>

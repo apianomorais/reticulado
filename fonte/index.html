@@ -1,0 +1,77 @@
+titulo: Dinâmica em potenciais de rede: geometria, caos e transporte
+kicker: Curso de pesquisa
+resumo: Como a geometria de um reticulado controla a anisotropia do potencial, o caos a baixa energia e o transporte acima da sela, em 2 a 8 dimensões.
+
+<p class="lead">Este curso acompanha um projeto de pesquisa em andamento. A pergunta central é simples de
+enunciar: <em>quanto da dinâmica de uma partícula num potencial periódico é decidido apenas pela geometria
+do reticulado?</em> A resposta que encontramos é: muito — e de forma quantitativa.</p>
+
+<h2 id="modelo">O modelo</h2>
+<p>Uma partícula de massa unitária se move em \(\R^N\) sob o potencial</p>
+\[
+H(\mathbf r,\mathbf p)=\frac{|\mathbf p|^2}{2}+V(\mathbf r),\qquad
+V(\mathbf r)=V_0\sum_{\mathbf k\in S}\bigl[1-\cos(\mathbf k\cdot\mathbf r)\bigr],
+\]
+<p>onde \(S\) contém um representante de cada par \(\pm\mathbf k\) de vetores de norma mínima do reticulado
+dual \(\Lambda^*\) de um reticulado \(\Lambda\). Esse potencial surge naturalmente na compactificação de
+Kaluza–Klein de um campo escalar num toro \(\R^N/\Lambda\): os vetores de \(S\) são os modos massivos mais
+leves. Trocando \(\Lambda\) trocamos <em>só</em> a geometria — o número de termos, as direções dos
+\(\mathbf k\) e a simetria — e mantemos a forma funcional.</p>
+
+<p>Estudamos 30 reticulados distintos entre 2 e 8 dimensões: as famílias \(\Z^N\), \(A_N\), \(A_N^*\),
+\(D_N\), \(D_N^*\) e os excepcionais \(E_6\), \(E_6^*\), \(E_7\), \(E_7^*\), \(E_8\).</p>
+
+<h2 id="resultados">Resultados principais</h2>
+
+<div class="box res"><span class="tit">1 · Geometria → anisotropia</span>
+Se os vetores de \(S\) formam um <em>design esférico de força \(t\)</em>, todos os termos da expansão de
+Taylor de \(V\) até a ordem \(t\) são radiais; a primeira dependência angular aparece na ordem \(t+1\),
+qualquer que seja a forma funcional (cosseno, cosseno hiperbólico, gaussiana). Quadrado: \(t=3\), anisotropia
+em \(r^4\); hexagonal: \(t=5\), anisotropia em \(r^6\).</div>
+
+<div class="box res"><span class="tit">2 · Anisotropia → caos a baixa energia</span>
+Como os vetores de \(S\) formam sempre um 2-design, todas as frequências harmônicas são iguais (ressonância
+\(1{:}1{:}\cdots{:}1\)). A forma normal ressonante é integrável quando o termo quártico é isotrópico
+(\(t\ge5\): \(A_2, D_4, E_6, E_6^*, E_7, E_7^*, E_8\)) ou separável (\(\Z^N\)), e caótica quando ele é
+anisotrópico (\(t=3\), \(N\ge3\)). Verificado nos 30 reticulados: nos casos \(t\ge5\) o momento angular
+\(|L|^2\) do modelo quártico se conserva até \(10^{-13}\); no potencial completo ele é quebrado pela ordem
+\(t+1\), com \(\delta|L|^2\propto E^{(t-3)/2}\).</div>
+
+<div class="box open"><span class="tit">3 · Acima da sela: passeio aleatório determinístico</span>
+Acima da energia de sela a partícula salta entre poços. Resultados preliminares mostram difusão
+fortemente anômala (voos balísticos), perda da recorrência de Pólya em 2D e aprisionamento completo em
+toros regulares nos reticulados \(t\ge5\) logo acima da sela, onde a teoria do estado de transição prevê
+saltos.</div>
+
+<figure class="fig"><img src="img/sintese_nd.png" alt="Figura-síntese: variação do momento angular e caos por classe de reticulado">
+<figcaption><b>Síntese dos resultados em 2–8 dimensões.</b> (a) Variação de \(|L|^2\) no potencial completo:
+as classes se separam e, para \(t\ge5\), a quebra da isotropia segue \(E^{(t-3)/2}\). (b) No truncamento
+quártico os casos \(t\ge5\) conservam \(|L|^2\) exatamente. (c) Expoente de Lyapunov a baixa energia relativo
+ao piso de ruído do \(\Z^N\) integrável.</figcaption></figure>
+
+<h2 id="mapa">Mapa do curso</h2>
+<div class="cards">
+<a class="card" href="reticulados.html"><span class="n">MÓDULO 1</span><h4>Reticulados e duais</h4>
+<p>Matriz de Gram, reticulado dual, sistemas de raízes \(A_n, D_n, E_n\), origem do potencial e as 30 geometrias estudadas.</p></a>
+<a class="card" href="anisotropia.html"><span class="n">MÓDULO 2</span><h4>Anisotropia e designs esféricos</h4>
+<p>Expansão de Taylor, designs esféricos, a regra “primeira anisotropia na ordem \(t+1\)”.</p></a>
+<a class="card" href="dinamica.html"><span class="n">MÓDULO 3</span><h4>Dinâmica e indicadores de caos</h4>
+<p>Confinamento e selas, integração simplética, Lyapunov em janelas, SALI/GALI, frequências, momento angular.</p></a>
+<a class="card" href="forma-normal.html"><span class="n">MÓDULO 4</span><h4>Forma normal e a classificação do caos</h4>
+<p>Ressonância \(1{:}\cdots{:}1\), integrabilidade, testes por deformação e os resultados em 2–8D.</p></a>
+<a class="card" href="difusao.html"><span class="n">MÓDULO 5</span><h4>Difusão e passeio de Pólya</h4>
+<p>Regime acima da sela, teoria do estado de transição microcanônica, voos de Lévy, recorrência.</p></a>
+<a class="card" href="codigos.html"><span class="n">MÓDULO 6</span><h4>Códigos</h4>
+<p>Os programas em Python, como rodar (Spyder/Windows) e o que cada saída significa.</p></a>
+</div>
+
+<h2 id="prerequisitos">Pré-requisitos e convenções</h2>
+<p>O texto assume mecânica hamiltoniana (espaço de fase, transformações canônicas, integrabilidade de
+Liouville–Arnold), noções de sistemas dinâmicos (expoentes de Lyapunov, teoria KAM) e álgebra linear.
+A teoria de reticulados e designs esféricos é apresentada do zero.</p>
+<ul>
+<li>Normalizamos os vetores de \(S\) para que \(\sum_{\mathbf k\in S}\mathbf k\mathbf k^{\mathsf T}=\mathbb 1\):
+todas as frequências harmônicas valem \(\omega_0=1\) e as energias são medidas em unidades de \(V_0\).</li>
+<li>\(E_{\rm sep}\) é a energia da sela mais baixa (limiar de confinamento); usamos \(\varepsilon=E/E_{\rm sep}\).</li>
+<li>\(t\) denota a força do design esférico formado por \(S\cup(-S)\).</li>
+</ul>

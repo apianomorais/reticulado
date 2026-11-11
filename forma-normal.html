@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forma normal e a classificação do caos</title>
+<meta name="description" content="Ressonância 1:1:…:1, forma normal de Birkhoff, quando ela é integrável, testes por deformação e os resultados em 30 reticulados de 2 a 8 dimensões.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+  macros: { R: '\\mathbb{R}', Z: '\\mathbb{Z}', E: '\\mathcal{E}' } },
+  chtml: { scale: 0.98 } };
+try { var t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="index.html"><div class="t1">Dinâmica em potenciais de rede</div>
+  <div class="t2">geometria · caos · transporte</div></a>
+  <ul class="nav">
+    <li><a href="index.html">Apresentação</a></li>
+    <li><a href="reticulados.html"><span class=n>1</span>Reticulados e duais</a></li>
+    <li><a href="anisotropia.html"><span class=n>2</span>Anisotropia e designs</a></li>
+    <li><a href="dinamica.html"><span class=n>3</span>Dinâmica e indicadores</a></li>
+    <li><a href="forma-normal.html" class="atual"><span class=n>4</span>Forma normal e caos</a></li>
+    <li><a href="difusao.html"><span class=n>5</span>Difusão e Pólya</a></li>
+    <li><a href="codigos.html"><span class=n>6</span>Códigos</a></li>
+    <li><a href="referencias.html">Referências</a></li>
+  </ul>
+  <div class="toc"><div class="rot">Nesta página</div>
+    <a href="#birkhoff">Forma normal ressonante</a>
+    <a href="#integrabilidade">Quando a forma normal é integrável</a>
+    <a href="#degenerescencia">Teste 1: quebrar a degenerescência</a>
+    <a href="#isotropia">Teste 2: tornar o quártico isotrópico</a>
+    <a href="#escala">Teste 3: escala \(\lambda=E\,\Lambda(E t)\)</a>
+    <a href="#nd">Resultados em 2 a 8 dimensões</a>
+  </div>
+  <div class="tema"><button onclick="alternarTema()">claro / escuro</button></div>
+</aside>
+<main>
+<div class="kicker">Módulo 4</div>
+<h1>Forma normal e a classificação do caos</h1>
+<p class="lead">A baixa energia, o que decide se há caos não é a altura da barreira, mas duas propriedades
+de \(S\): se as frequências harmônicas são degeneradas e se o termo quártico é isotrópico. Este módulo
+explica por quê e mostra a verificação numérica.</p>
+
+<h2 id="birkhoff">Forma normal ressonante</h2>
+<p>Perto do mínimo, \(H=H_2+H_4+H_6+\cdots\), com \(H_2=\tfrac12\sum_i(p_i^2+\omega_i^2r_i^2)\) e \(H_{2m}\)
+homogêneo de grau \(2m\) em \(\mathbf r\). Com a normalização do Módulo 1, <b>todos os \(\omega_i=1\)</b>: o fluxo
+de \(H_2\) é periódico de período \(2\pi\) e temos a ressonância \(1{:}1{:}\cdots{:}1\). A forma normal de
+Birkhoff–Gustavson ressonante elimina tudo o que não comuta com \(H_2\):</p>
+\[
+H=H_2+\overline{H_4}+O(E^3),\qquad \overline{H_4}=\frac1{2\pi}\int_0^{2\pi}H_4\circ\phi^s_{H_2}\,ds,
+\qquad \{H_2,\overline{H_4}\}=0 .
+\]
+<p>Fixado \(H_2\approx E\), a dinâmica lenta gerada por \(\overline{H_4}\) vive no espaço reduzido
+\(\mathbb{CP}^{N-1}\) (dimensão \(2N-2\)). Como \(\overline{H_4}\sim E^2\), essa dinâmica tem escala de tempo
+\(\propto1/E\). Daí uma previsão de escala:</p>
+\[
+\lambda(E)=E\,\Lambda\bigl(\tau\bigr),\qquad \tau=E\,t,
+\]
+<p>com \(\Lambda\) uma propriedade do sistema reduzido, independente da energia.</p>
+
+<h2 id="integrabilidade">Quando a forma normal é integrável</h2>
+<ul>
+<li><b>\(N=2\):</b> \(\mathbb{CP}^1=S^2\) tem dimensão 2, então \(\overline{H_4}\) é um sistema de um grau de liberdade:
+sempre integrável. Por isso \(\Z^2\) e \(A_2\) são regulares a baixa energia.</li>
+<li><b>Termo quártico isotrópico (\(t\ge5\)):</b> \(H_4\propto r^4\) é invariante por \(SO(N)\), e
+\(\overline{H_4}\) depende só de \(H_2\) e de \(|L|^2\). Integrável, e \(|L|^2\) é conservado.</li>
+<li><b>Potencial separável (\(\Z^N\)):</b> integrável em qualquer energia.</li>
+<li><b>Termo quártico anisotrópico (\(t=3\)) com \(N\ge3\):</b> \(\overline{H_4}\) é uma função genérica num espaço de
+dimensão \(\ge4\). Não integrável: <b>caos em energia arbitrariamente baixa</b>, com \(\lambda\propto E\).</li>
+</ul>
+<div class="box res"><span class="tit">Previsão</span>
+Regular a baixa energia se separável, \(N=2\) ou \(t\ge5\); caótico desde \(E\to0\) se \(t=3\) e \(N\ge3\).
+Quando a isotropia vale até a ordem \(t\), o primeiro termo que quebra \(SO(N)\) tem ordem \(t+1\), e sua
+força relativa ao quártico é \(\propto r^{t+1-4}\propto E^{(t-3)/2}\). Isso sugere
+\(\delta|L|^2\propto E^{(t-3)/2}\) no potencial completo.</div>
+
+<h2 id="degenerescencia">Teste 1: quebrar a degenerescência</h2>
+<p>Se as frequências não são degeneradas e não há ressonância de ordem baixa, a forma normal de quarta ordem
+é função só das ações, logo integrável, e o teorema KAM protege a maioria das órbitas até que o deslocamento
+anarmônico das frequências (\(\propto E\)) se torne comparável ao desacordo \(\delta\) entre elas. Prevemos um
+início do caos \(E_{\rm on}\propto\delta\).</p>
+<p>Testamos isso deformando o FCC: \(\mathbf k\to\mathbf k\,\mathrm{diag}(1,1,1+\delta)\), que leva as
+frequências a \((1,1,1+\delta)\) sem mudar o termo quártico. Observamos
+\(E_{\rm on}\propto\delta^{1{,}13}\) em seis valores de \(\delta\) entre 0,003 e 0,3. Um fato estrutural
+confirma a leitura: o reticulado “MCC” estudado antes é <b>exatamente</b> o FCC tetragonal com
+\(\delta=2^{1/4}-1\), a menos de uma reescala do tempo. A diferença entre FCC (caótico) e MCC (regular até
+\(0{,}6E_{\rm sep}\)) vem só da quebra de degenerescência.</p>
+
+<h2 id="isotropia">Teste 2: tornar o quártico isotrópico</h2>
+<p>Somando ao FCC uma segunda camada de vetores \((\pm1,0,0),\dots\) com peso \(\beta/2\), as frequências
+continuam degeneradas para todo \(\beta\), mas o termo quártico fica exatamente isotrópico em \(\beta=1\). A
+fração caótica a \(0{,}1\,E_{\rm sep}\) (com \(T=10^4\)) cai a zero perto de \(\beta=1\) e volta a crescer dos
+dois lados:</p>
+<div class="tabwrap"><table>
+<tr><th>\(\beta\)</th><td class="num">0</td><td class="num">0,5</td><td class="num">0,8</td><td class="num">0,9</td><td class="num"><b>1,0</b></td><td class="num">1,1</td><td class="num">1,2</td><td class="num">1,5</td><td class="num">2,0</td></tr>
+<tr><th>fração caótica</th><td class="num">0,93</td><td class="num">0,57</td><td class="num">0,15</td><td class="num">0</td><td class="num"><b>0</b></td><td class="num">0</td><td class="num">0</td><td class="num">0,17</td><td class="num">0,23</td></tr>
+</table></div>
+
+<h2 id="escala">Teste 3: escala \(\lambda=E\,\Lambda(E t)\)</h2>
+<p>Juntando integrações com \(T\) de \(2\times10^3\) a \(5\times10^4\), \(\lambda/E\) do FCC e do \(A_4\) cai numa
+curva única em \(\tau=E\,T\), como a forma normal prevê. Entre \(\tau\approx10^2\) e \(10^4\), porém, os dados
+seguem \(\lambda/E\propto\tau^{-0{,}19}\), sem patamar visível. Isso explica o expoente aparente
+\(\lambda\propto E^{0{,}8}\) a \(T\) fixo, mas deixa uma questão em aberto.</p>
+<figure class="fig"><img src="img/colapso_tau.png" alt="Colapso de lambda/E em função de tau = E T">
+<figcaption><b>Colapso em \(\tau=E\,T\).</b> Cada cor é um tempo de integração diferente; os pontos de energias
+muito distintas caem na mesma curva.</figcaption></figure>
+<div class="box open"><span class="tit">Em aberto</span>
+\(\lambda/E\) satura num valor positivo para \(\tau\gg10^4\) (então \(\lambda\propto E\) assintoticamente) ou
+continua decaindo (caos fraco, com aderência a ilhas)? Decidir exige \(\tau\sim10^5\)–\(10^6\) e expoentes
+medidos em janelas, só no regime exponencial.</div>
+
+<h2 id="nd">Resultados em 2 a 8 dimensões</h2>
+<p>Rodamos os 30 reticulados com o potencial completo e com o truncamento \(r^2+r^4\)
+(\(V^{(4)}=\sum_{\mathbf k}[(\mathbf k\cdot\mathbf r)^2/2-(\mathbf k\cdot\mathbf r)^4/24]\)), 10 energias e 40
+órbitas por energia, com \(T=5000\). A previsão se confirma em todos os casos.</p>
+
+<h3>Momento angular</h3>
+<figure class="fig"><img src="img/L2_quartico.png" alt="Variação do momento angular no modelo quártico">
+<figcaption><b>Truncamento quártico.</b> Nos casos \(t\ge5\) e no \(A_2\), \(|L|^2\) se conserva até
+\(\sim10^{-13}\), a precisão de máquina. Nos \(t=3\) e separáveis varia de 30% a 100%.</figcaption></figure>
+<figure class="fig"><img src="img/L2_completo.png" alt="Variação do momento angular no potencial completo">
+<figcaption><b>Potencial completo.</b> Nos \(t\ge5\) a conservação é quebrada pelas ordens superiores:
+\(\delta|L|^2\propto E^{1{,}16\text{–}1{,}27}\) para \(t=5\) e \(\propto E^{2{,}12}\) para o \(E_8\) (\(t=7\)),
+de acordo com \(E^{(t-3)/2}\).</figcaption></figure>
+
+<h3>Expoentes de Lyapunov e origem do caos</h3>
+<figure class="fig"><img src="img/lambda_completo.png" alt="Expoente de Lyapunov no potencial completo">
+<figcaption><b>\(\lambda_1\) (mediana) no potencial completo.</b> Cinza: \(\Z^N\) (piso de ruído). Os \(t=3\)
+(azul) ficam bem acima do piso desde \(0{,}01\,E_{\rm sep}\); os \(t\ge5\) ficam perto dele a baixa energia e
+sobem só perto da sela.</figcaption></figure>
+<figure class="fig"><img src="img/completo_vs_quartico.png" alt="Lyapunov e momento angular: completo contra quártico">
+<figcaption><b>Completo × quártico na mesma energia.</b> Nos \(t=3\) os pontos caem sobre a diagonal: todo o caos
+vem do termo quártico. Nos \(t\ge5\) o completo fica até ~300 vezes acima: o caos vem das ordens \(r^6\) em
+diante.</figcaption></figure>
+<figure class="fig"><img src="img/mapa_caos.png" alt="Mapa da fração caótica">
+<figcaption><b>Fração de órbitas caóticas (SALI).</b> O início aparente se desloca para energias maiores com
+\(N\) porque \(T=5000\) é curto para o critério do SALI a baixa energia (ver Módulo 3); o \(\lambda\) acima do
+piso mostra o caos já em \(0{,}01\,E_{\rm sep}\).</figcaption></figure>
+
+<h3>Resumo quantitativo a baixa energia</h3>
+<p>Razão \(\lambda_1/\lambda_1(\Z^N)\) a \(E=0{,}05\,E_{\rm sep}\), potencial completo:</p>
+<div class="tabwrap"><table>
+<tr><th>N</th><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">6</td><td class="num">7</td><td class="num">8</td></tr>
+<tr><th>\(t=3\)</th><td class="num">28–229</td><td class="num">39–71</td><td class="num">10–33</td><td class="num">10–17</td><td class="num">9–15</td><td class="num">9–11</td></tr>
+<tr><th>\(t\ge5\)</th><td class="num">—</td><td class="num">3,7</td><td class="num">—</td><td class="num">1,7–3,0</td><td class="num">2,6–3,3</td><td class="num">1,9</td></tr>
+</table></div>
+<p>A margem diminui com \(N\) porque o piso de ruído do \(\lambda\) sobe com a dimensão (de \(10^{-5}\) em \(N=2\)
+para \(1{,}7\times10^{-4}\) em \(N=8\)). Em dimensão alta, \(\delta|L|^2\) separa as classes com folga muito maior
+do que \(\lambda\).</p>
+<div class="box open"><span class="tit">Em andamento</span>
+Uma rodada com \(T=5\times10^4\) a \(E\le0{,}1\,E_{\rm sep}\) (um reticulado \(t=3\) e um \(t\ge5\) por dimensão)
+deve tornar a fração caótica e os expoentes em janelas confiáveis no regime de baixa energia.</div>
+
+<nav class="passo"><a href="dinamica.html"><span class="rot">← anterior</span>Dinâmica confinada e indicadores de caos</a><a href="difusao.html" style="text-align:right"><span class="rot">próximo →</span>Difusão e o passeio de Pólya</a></nav>
+<footer>Grupo de pesquisa: L. P. Silva, M. O. Tahim, A. F. Morais (URCA / UECE). Material em construção —
+resultados marcados como preliminares podem mudar.</footer>
+</main>
+</div>
+<script>
+function alternarTema() {
+  var r = document.documentElement, at = r.dataset.theme ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  r.dataset.theme = at === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('tema', r.dataset.theme); } catch (e) {}
+}
+</script>
+</body>
+</html>

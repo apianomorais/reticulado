@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reticulados, duais e o potencial</title>
+<meta name="description" content="Definições de reticulado, matriz de Gram e dual; sistemas de raízes A, D, E; origem Kaluza–Klein do potencial e as 30 geometrias estudadas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+  macros: { R: '\\mathbb{R}', Z: '\\mathbb{Z}', E: '\\mathcal{E}' } },
+  chtml: { scale: 0.98 } };
+try { var t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="index.html"><div class="t1">Dinâmica em potenciais de rede</div>
+  <div class="t2">geometria · caos · transporte</div></a>
+  <ul class="nav">
+    <li><a href="index.html">Apresentação</a></li>
+    <li><a href="reticulados.html" class="atual"><span class=n>1</span>Reticulados e duais</a></li>
+    <li><a href="anisotropia.html"><span class=n>2</span>Anisotropia e designs</a></li>
+    <li><a href="dinamica.html"><span class=n>3</span>Dinâmica e indicadores</a></li>
+    <li><a href="forma-normal.html"><span class=n>4</span>Forma normal e caos</a></li>
+    <li><a href="difusao.html"><span class=n>5</span>Difusão e Pólya</a></li>
+    <li><a href="codigos.html"><span class=n>6</span>Códigos</a></li>
+    <li><a href="referencias.html">Referências</a></li>
+  </ul>
+  <div class="toc"><div class="rot">Nesta página</div>
+    <a href="#definicoes">Reticulados e matriz de Gram</a>
+    <a href="#dual">O reticulado dual</a>
+    <a href="#kk">Origem do potencial: compactificação de Kaluza–Klein</a>
+    <a href="#familias">As famílias de reticulados</a>
+    <a href="#normalizacao">Normalização: todos os modos com \(\omega=1\)</a>
+    <a href="#tabela">As 30 geometrias</a>
+  </div>
+  <div class="tema"><button onclick="alternarTema()">claro / escuro</button></div>
+</aside>
+<main>
+<div class="kicker">Módulo 1</div>
+<h1>Reticulados, duais e o potencial</h1>
+<p class="lead">Neste módulo construímos o objeto central: o conjunto \(S\) de vetores mínimos do dual, que
+define o potencial. Tudo o que acontece depois — anisotropia, caos, difusão — é uma propriedade de \(S\).</p>
+
+<h2 id="definicoes">Reticulados e matriz de Gram</h2>
+<div class="box def"><span class="tit">Definição</span>
+Um <b>reticulado</b> \(\Lambda\subset\R^N\) é o conjunto das combinações inteiras de \(N\) vetores linearmente
+independentes \(\mathbf b_1,\dots,\mathbf b_N\):
+\(\Lambda=\{\sum_i n_i\mathbf b_i:\ n_i\in\Z\}=B\Z^N\), com \(B=[\mathbf b_1\cdots\mathbf b_N]\).
+A <b>matriz de Gram</b> \(G=B^{\mathsf T}B\), \(G_{ij}=\mathbf b_i\cdot\mathbf b_j\), determina o reticulado a
+menos de rotações.</div>
+<p>Em coordenadas da base, \(\mathbf r=B\boldsymbol\varphi\), a norma é \(|\mathbf r|^2=\boldsymbol\varphi^{\mathsf T}G\boldsymbol\varphi\).
+Na prática obtemos uma base cartesiana pela decomposição de Cholesky \(G=LL^{\mathsf T}\), \(B=L^{\mathsf T}\).
+Dois exemplos em 2D:</p>
+\[
+G_{\Z^2}=\begin{pmatrix}1&0\\0&1\end{pmatrix},\qquad
+G_{A_2}=\begin{pmatrix}2&-1\\-1&2\end{pmatrix}.
+\]
+
+<h2 id="dual">O reticulado dual</h2>
+<div class="box def"><span class="tit">Definição</span>
+O <b>dual</b> é \(\Lambda^*=\{\mathbf k\in\R^N:\ \mathbf k\cdot\mathbf v\in\Z\ \ \forall\,\mathbf v\in\Lambda\}\).
+Sua matriz de Gram é \(G^{-1}\), e a base dual satisfaz \(\mathbf k_i\cdot\mathbf b_j=\delta_{ij}\).</div>
+<p>O dual é o espaço de “vetores de onda” compatíveis com a periodicidade de \(\Lambda\): uma função
+\(e^{2\pi i\,\mathbf k\cdot\mathbf r}\) é \(\Lambda\)-periódica exatamente quando \(\mathbf k\in\Lambda^*\). No
+código escrevemos \(\cos(\mathbf k\cdot\mathbf r)\), absorvendo o \(2\pi\) na escala de \(\mathbf r\); o
+potencial é então periódico no reticulado \(2\pi\,(\mathrm{span}_\Z S)^*\).</p>
+<p>Os <b>vetores de norma mínima</b> do dual formam um conjunto finito e simétrico. Seu número é o
+<em>número de beijo</em> \(\tau(\Lambda^*)\). Ficamos com \(|S|=\tau/2\) representantes, um por par \(\pm\mathbf k\).</p>
+
+<h2 id="kk">Origem do potencial: compactificação de Kaluza–Klein</h2>
+<p>Considere um campo escalar livre \(\Phi(x^\mu,\mathbf y)\) em \(M_4\times T^N_\Lambda\), com
+\(T^N_\Lambda=\R^N/\Lambda\). A periodicidade \(\Phi(x,\mathbf y+\mathbf v)=\Phi(x,\mathbf y)\) para
+\(\mathbf v\in\Lambda\) impõe a expansão</p>
+\[
+\Phi(x,\mathbf y)=\sum_{\mathbf k\in\Lambda^*}\phi_{\mathbf k}(x)\,e^{2\pi i\,\mathbf k\cdot\mathbf y},
+\qquad m_{\mathbf k}\propto|\mathbf k|.
+\]
+<p>Os modos não nulos mais leves são os vetores de norma mínima de \(\Lambda^*\). Mantendo apenas esses
+modos, com amplitudes constantes, tomando a parte real e fixando a constante para que o potencial se anule
+na origem, obtemos \(V=V_0\sum_{\mathbf k\in S}[1-\cos(\mathbf k\cdot\mathbf y)]\). Por exemplo,</p>
+\[
+V_{\Z^2}=V_0\bigl[2-\cos\varphi_1-\cos\varphi_2\bigr],\qquad
+V_{A_2}=V_0\bigl[3-\cos\varphi_1-\cos\varphi_2-\cos(\varphi_1-\varphi_2)\bigr].
+\]
+
+<figure class="fig"><img src="img/reticulados_dual.png" alt="Reticulados quadrado e hexagonal com seus duais e vetores mínimos">
+<figcaption><b>Reticulados \(\Z^2\) e \(A_2\) e seus duais.</b> Pontos cinzas: \(\Lambda\); círculos vermelhos:
+\(\Lambda^*\). Setas pretas: base \(\{\mathbf b_1,\mathbf b_2\}\); setas vermelhas: vetores mínimos
+\(\pm\mathbf k\) do dual. Os 4 vetores do \(\Z^2\) formam um design de força 3; os 6 do \(A_2\), de força 5.</figcaption></figure>
+
+<h2 id="familias">As famílias de reticulados</h2>
+<ul>
+<li>\(\Z^N\): \(\Lambda^*=\Z^N\), \(S=\{\mathbf e_i\}\). O potencial é <b>separável</b> (soma de pêndulos
+independentes) e serve de controle integrável.</li>
+<li>\(A_n=\{\mathbf x\in\Z^{n+1}:\sum x_i=0\}\): o dual \(A_n^*\) tem \(n+1\) pares de vetores mínimos (as
+projeções de \(\mathbf e_i\) no hiperplano \(\sum x_i=0\)). \(A_3\) é o FCC.</li>
+<li>\(A_n^*\): seu dual é \(A_n\), cujos vetores mínimos são as raízes \(\mathbf e_i-\mathbf e_j\):
+\(n(n+1)/2\) pares. \(A_3^*\) é o BCC.</li>
+<li>\(D_n=\{\mathbf x\in\Z^n:\sum x_i\ \text{par}\}\): para \(n\ge5\) os vetores mínimos de \(D_n^*\) são
+apenas \(\pm\mathbf e_i\), e o potencial coincide com o do \(\Z^n\). Em \(n=4\) somam-se os 16 vetores
+\((\pm\tfrac12)^4\), formando o politopo de 24 células.</li>
+<li>\(D_n^*\): potencial com as raízes \(\pm\mathbf e_i\pm\mathbf e_j\) de \(D_n\): \(n(n-1)\) pares.</li>
+<li>\(E_8\): \(D_8\cup(D_8+\tfrac12\mathbf 1)\), autodual, 240 raízes (120 pares). \(E_7\) e \(E_6\) são
+obtidos dentro de \(E_8\): as raízes de \(E_7\) são as de \(E_8\) ortogonais a uma raiz (126), e os vetores
+mínimos de \(E_7^*\) são projeções de 56 raízes; analogamente \(E_6\) (72 raízes) e \(E_6^*\) (54 vetores).</li>
+</ul>
+
+<div class="box warn"><span class="tit">Equivalências</span>
+Potenciais isométricos são calculados uma vez só: \(A_2^*\equiv A_2\), \(D_3\equiv A_3\) (FCC),
+\(D_3^*\equiv A_3^*\) (BCC), \(D_4^*\equiv D_4\) e \(D_n\equiv\Z^n\) para \(n\ge5\). O programa detecta isso
+automaticamente por um invariante da matriz \(|S S^{\mathsf T}|\). Restam 30 casos distintos.</div>
+
+<h2 id="normalizacao">Normalização: todos os modos com \(\omega=1\)</h2>
+<p>Perto da origem, \(V\approx\tfrac12\,\mathbf r^{\mathsf T}\bigl(\sum_{\mathbf k}\mathbf k\mathbf k^{\mathsf T}\bigr)\mathbf r\).
+Para todos os reticulados estudados, \(S\cup(-S)\) é (pelo menos) um 2-design, o que implica
+\(\sum_{\mathbf k}\mathbf k\mathbf k^{\mathsf T}=c\,\mathbb 1\). Reescalando \(\mathbf k\to\mathbf k/\sqrt c\)
+obtemos frequências harmônicas todas iguais a 1. Isso só muda as unidades de \(\mathbf r\) e de \(t\):
+energias de sela e anisotropias ficam inalteradas, e reticulados de dimensões diferentes passam a ser
+diretamente comparáveis.</p>
+<div class="box warn"><span class="tit">Consequência importante</span>
+Frequências todas iguais significam <b>ressonância \(1{:}1{:}\cdots{:}1\)</b> em todos os 30 reticulados. Esse
+fato é o ponto de partida do Módulo 4.</div>
+
+<h2 id="tabela">As 30 geometrias</h2>
+<p>\(M=|S|\) é o número de termos do potencial; \(t\), a força do design; \(\rho_4=\max_{\hat u}/\min_{\hat u}\sum_{\mathbf k}(\mathbf k\cdot\hat u)^4\)
+mede a anisotropia do termo quártico (\(\rho_4=1\): isotrópico); \(E_{\rm sep}\) e \(E_{\rm sep}^{(4)}\) são as
+energias de sela do potencial completo e do truncamento quártico.</p>
+<div class="tabwrap"><table>
+<tr><th>reticulado</th><th class="num">N</th><th class="num">M</th><th>classe</th><th class="num">\(\rho_4\)</th><th class="num">\(E_{\rm sep}\)</th><th class="num">\(E^{(4)}_{\rm sep}\)</th><th>equivalentes</th></tr>
+<tr><td>Z2</td><td class="num">2</td><td class="num">2</td><td>separável</td><td class="num">2,000</td><td class="num">2</td><td class="num">1,5</td><td></td></tr>
+<tr class="t5"><td>A2</td><td class="num">2</td><td class="num">3</td><td>t = 5</td><td class="num">1,000</td><td class="num">4</td><td class="num">3</td><td>A2*</td></tr>
+<tr><td>Z3</td><td class="num">3</td><td class="num">3</td><td>separável</td><td class="num">3,000</td><td class="num">2</td><td class="num">1,5</td><td></td></tr>
+<tr class="t3"><td>A3 (FCC)</td><td class="num">3</td><td class="num">4</td><td>t = 3</td><td class="num">2,333</td><td class="num">4</td><td class="num">2,571</td><td>D3</td></tr>
+<tr class="t3"><td>A3* (BCC)</td><td class="num">3</td><td class="num">6</td><td>t = 3</td><td class="num">1,333</td><td class="num">6</td><td class="num">4,5</td><td>D3*</td></tr>
+<tr><td>Z4</td><td class="num">4</td><td class="num">4</td><td>separável</td><td class="num">4,0</td><td class="num">2</td><td class="num">1,5</td><td></td></tr>
+<tr class="t3"><td>A4</td><td class="num">4</td><td class="num">5</td><td>t = 3</td><td class="num">2,778</td><td class="num">3,5</td><td class="num">2,308</td><td></td></tr>
+<tr class="t3"><td>A4*</td><td class="num">4</td><td class="num">10</td><td>t = 3</td><td class="num">1,498</td><td class="num">8</td><td class="num">6</td><td></td></tr>
+<tr class="t5"><td>D4</td><td class="num">4</td><td class="num">12</td><td>t = 5</td><td class="num">1,000</td><td class="num">12</td><td class="num">9</td><td>D4*</td></tr>
+<tr><td>Z5</td><td class="num">5</td><td class="num">5</td><td>separável</td><td class="num">≈5</td><td class="num">2</td><td class="num">1,5</td><td>D5</td></tr>
+<tr class="t3"><td>A5</td><td class="num">5</td><td class="num">6</td><td>t = 3</td><td class="num">4,045</td><td class="num">3,172</td><td class="num">2,143</td><td></td></tr>
+<tr class="t3"><td>A5*</td><td class="num">5</td><td class="num">15</td><td>t = 3</td><td class="num">1,780</td><td class="num">10</td><td class="num">7,5</td><td></td></tr>
+<tr class="t3"><td>D5*</td><td class="num">5</td><td class="num">20</td><td>t = 3</td><td class="num">1,245</td><td class="num">16</td><td class="num">12</td><td></td></tr>
+<tr><td>Z6</td><td class="num">6</td><td class="num">6</td><td>separável</td><td class="num">≈6</td><td class="num">2</td><td class="num">1,5</td><td>D6</td></tr>
+<tr class="t3"><td>A6</td><td class="num">6</td><td class="num">7</td><td>t = 3</td><td class="num">4,628</td><td class="num">2,955</td><td class="num">2,032</td><td></td></tr>
+<tr class="t3"><td>A6*</td><td class="num">6</td><td class="num">21</td><td>t = 3</td><td class="num">1,963</td><td class="num">12</td><td class="num">9</td><td></td></tr>
+<tr class="t3"><td>D6*</td><td class="num">6</td><td class="num">30</td><td>t = 3</td><td class="num">1,477</td><td class="num">20</td><td class="num">15</td><td></td></tr>
+<tr class="t5"><td>E6</td><td class="num">6</td><td class="num">27</td><td>t = 5</td><td class="num">1,000</td><td class="num">24</td><td class="num">18</td><td></td></tr>
+<tr class="t5"><td>E6*</td><td class="num">6</td><td class="num">36</td><td>t = 5</td><td class="num">1,000</td><td class="num">32</td><td class="num">24</td><td></td></tr>
+<tr><td>Z7</td><td class="num">7</td><td class="num">7</td><td>separável</td><td class="num">≈7</td><td class="num">2</td><td class="num">1,5</td><td>D7</td></tr>
+<tr class="t3"><td>A7</td><td class="num">7</td><td class="num">8</td><td>t = 3</td><td class="num">5,659</td><td class="num">2,804</td><td class="num">1,954</td><td></td></tr>
+<tr class="t3"><td>A7*</td><td class="num">7</td><td class="num">28</td><td>t = 3</td><td class="num">2,171</td><td class="num">14</td><td class="num">10,5</td><td></td></tr>
+<tr class="t3"><td>D7*</td><td class="num">7</td><td class="num">42</td><td>t = 3</td><td class="num">1,696</td><td class="num">24</td><td class="num">18</td><td></td></tr>
+<tr class="t5"><td>E7</td><td class="num">7</td><td class="num">28</td><td>t = 5</td><td class="num">1,000</td><td class="num">24</td><td class="num">18</td><td></td></tr>
+<tr class="t5"><td>E7*</td><td class="num">7</td><td class="num">63</td><td>t = 5</td><td class="num">1,000</td><td class="num">54</td><td class="num">40,5</td><td></td></tr>
+<tr><td>Z8</td><td class="num">8</td><td class="num">8</td><td>separável</td><td class="num">≈8</td><td class="num">2</td><td class="num">1,5</td><td>D8</td></tr>
+<tr class="t3"><td>A8</td><td class="num">8</td><td class="num">9</td><td>t = 3</td><td class="num">6,286</td><td class="num">2,693</td><td class="num">1,895</td><td></td></tr>
+<tr class="t3"><td>A8*</td><td class="num">8</td><td class="num">36</td><td>t = 3</td><td class="num">2,281</td><td class="num">16</td><td class="num">12</td><td></td></tr>
+<tr class="t3"><td>D8*</td><td class="num">8</td><td class="num">56</td><td>t = 3</td><td class="num">1,886</td><td class="num">28</td><td class="num">21</td><td></td></tr>
+<tr class="t7"><td>E8</td><td class="num">8</td><td class="num">120</td><td>t = 7</td><td class="num">1,000</td><td class="num">112</td><td class="num">75</td><td>E8*</td></tr>
+</table></div>
+<p>Para \(\Z^N\), \(\rho_4=N\) exatamente (máximo ao longo de \(\mathbf e_i\), mínimo na diagonal); os valores
+“≈” vêm da amostragem numérica. Na família \(A_n\) a sela mais baixa fica <em>abaixo</em> do ponto médio dos
+períodos (por exemplo, \(E_{\rm sep}=3{,}5<4\) em \(A_4\)), porque o caminho de escape passa perto de mínimos
+secundários localizados nos “buracos profundos” do reticulado.</p>
+
+<nav class="passo"><a href="index.html"><span class="rot">← anterior</span>Dinâmica em potenciais de rede: geometria, caos e transporte</a><a href="anisotropia.html" style="text-align:right"><span class="rot">próximo →</span>Anisotropia local e designs esféricos</a></nav>
+<footer>Grupo de pesquisa: L. P. Silva, M. O. Tahim, A. F. Morais (URCA / UECE). Material em construção —
+resultados marcados como preliminares podem mudar.</footer>
+</main>
+</div>
+<script>
+function alternarTema() {
+  var r = document.documentElement, at = r.dataset.theme ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  r.dataset.theme = at === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('tema', r.dataset.theme); } catch (e) {}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Códigos</title>
+<meta name="description" content="Os programas em Python do projeto, como rodá-los no Spyder ou no terminal, e o que cada saída contém.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+  macros: { R: '\\mathbb{R}', Z: '\\mathbb{Z}', E: '\\mathcal{E}' } },
+  chtml: { scale: 0.98 } };
+try { var t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="index.html"><div class="t1">Dinâmica em potenciais de rede</div>
+  <div class="t2">geometria · caos · transporte</div></a>
+  <ul class="nav">
+    <li><a href="index.html">Apresentação</a></li>
+    <li><a href="reticulados.html"><span class=n>1</span>Reticulados e duais</a></li>
+    <li><a href="anisotropia.html"><span class=n>2</span>Anisotropia e designs</a></li>
+    <li><a href="dinamica.html"><span class=n>3</span>Dinâmica e indicadores</a></li>
+    <li><a href="forma-normal.html"><span class=n>4</span>Forma normal e caos</a></li>
+    <li><a href="difusao.html"><span class=n>5</span>Difusão e Pólya</a></li>
+    <li><a href="codigos.html" class="atual"><span class=n>6</span>Códigos</a></li>
+    <li><a href="referencias.html">Referências</a></li>
+  </ul>
+  <div class="toc"><div class="rot">Nesta página</div>
+    <a href="#arquivos">Arquivos</a>
+    <a href="#rodar">Como rodar</a>
+    <a href="#praticas">Boas práticas embutidas</a>
+    <a href="#saidas">Saídas</a>
+    <a href="#custo">Custo computacional</a>
+  </div>
+  <div class="tema"><button onclick="alternarTema()">claro / escuro</button></div>
+</aside>
+<main>
+<div class="kicker">Módulo 6</div>
+<h1>Códigos</h1>
+<p class="lead">Todos os programas estão na pasta <a href="https://github.com/apianomorais/reticulado/tree/main/codigo"><code>codigo/</code></a>
+deste repositório. Dependem só de NumPy, SciPy e Matplotlib (a distribuição Anaconda já inclui todos).</p>
+
+<h2 id="arquivos">Arquivos</h2>
+<div class="tabwrap"><table>
+<tr><th>arquivo</th><th>papel</th></tr>
+<tr><td><a href="codigo/lattice_nd.py"><code>lattice_nd.py</code></a></td><td>Núcleo: constrói os 30 reticulados, detecta equivalências, encontra pontos críticos e \(E_{\rm sep}\), integra a dinâmica confinada (completo e quártico) com todos os indicadores, gera figuras e relatório.</td></tr>
+<tr><td><a href="codigo/run_nd.py"><code>run_nd.py</code></a></td><td>Configuração da rodada principal (2–8 dimensões). É o arquivo que se executa.</td></tr>
+<tr><td><a href="codigo/run_nd_longo.py"><code>run_nd_longo.py</code></a></td><td>Rodada longa (\(T=5\times10^4\)) a baixa energia.</td></tr>
+<tr><td><a href="codigo/figura_sintese_nd.py"><code>figura_sintese_nd.py</code></a></td><td>Figura-síntese a partir do <code>resultados_nd.csv</code>.</td></tr>
+<tr><td><a href="codigo/lattice_diff.py"><code>lattice_diff.py</code></a></td><td>Regime de difusão: dinâmica acima da sela, TST microcanônica, passeios markovianos, Pólya.</td></tr>
+<tr><td><a href="codigo/run_diff.py"><code>run_diff.py</code></a></td><td>Configuração da rodada de difusão.</td></tr>
+<tr><td><code>figuras_resumo/</code></td><td>Figuras dos casos 2D (Módulos 1–3).</td></tr>
+</table></div>
+
+<h2 id="rodar">Como rodar</h2>
+<p>Coloque os arquivos numa mesma pasta, de preferência fora do OneDrive (a sincronização pode bloquear
+arquivos durante rodadas longas). No Spyder, abra o arquivo <code>run_*.py</code> desejado e aperte F5, ou use
+o console:</p>
+<pre><code>%cd C:/simulacoes/reticulado
+%run run_nd.py          # dinâmica confinada, 2–8D
+%run run_nd_longo.py    # baixa energia, T longo
+%run run_diff.py        # difusão acima da sela</code></pre>
+<p>No terminal (Anaconda Prompt), <code>python run_nd.py</code>. O núcleo aceita opções diretamente:</p>
+<pre><code>python lattice_nd.py --dims 6 7 8 --workers 20
+python lattice_nd.py --lattices A3 D4 E8 --t-max 10000
+python lattice_nd.py --only-analysis       # refaz figuras e relatório
+python lattice_nd.py --help</code></pre>
+
+<h2 id="praticas">Boas práticas embutidas</h2>
+<ul>
+<li><b>Retomada:</b> cada tarefa (reticulado, modelo, energia) é salva num <code>.npz</code> próprio assim que
+termina. Interromper e rodar de novo só refaz o que falta ou o que mudou de configuração (\(T\), \(h\), número
+de órbitas).</li>
+<li><b>Paralelismo:</b> processos independentes por tarefa (<code>WORKERS</code>); no Windows o bloco
+<code>if __name__ == "__main__"</code> é obrigatório. Se o Spyder travar, use <code>WORKERS = 1</code>.</li>
+<li><b>Modo de teste:</b> <code>QUICK = True</code> roda uma versão reduzida de ponta a ponta em poucos minutos.</li>
+<li><b>Controles:</b> o \(\Z^N\) separável fornece o piso de ruído; o erro de energia \(\Delta H/H\) é registrado
+em todas as tarefas.</li>
+</ul>
+
+<h2 id="saidas">Saídas</h2>
+<ul>
+<li><code>resultados_nd.txt</code>: tabela dos reticulados (\(N\), termos, classe, \(t\), \(\rho_4\), \(E_{\rm sep}\)),
+resumo a baixa energia comparando a previsão da forma normal com o observado, e tabelas por reticulado.</li>
+<li><code>resultados_nd.csv</code>: todos os números, uma linha por (reticulado, modelo, energia).</li>
+<li><code>figuras/</code>: dinâmica e seções de Poincaré por reticulado; comparações por dimensão; mapa de calor.</li>
+<li><code>resultados_difusao.txt</code> e <code>.csv</code>: \(\alpha\), \(D\), \(D_{\rm TST}\), \(D_M\), taxas,
+aprisionamento e as estatísticas de Pólya.</li>
+</ul>
+
+<h2 id="custo">Custo computacional</h2>
+<p>Com 20 processos: a rodada principal (~550 tarefas, \(T=5000\)) leva cerca de 1 hora; a rodada longa,
+cerca de 1 hora; a difusão (13 reticulados × 10 energias, \(T=2\times10^4\)), cerca de 30 minutos. O caso mais
+caro é o \(E_8\) (120 termos em 8 dimensões).</p>
+
+<nav class="passo"><a href="difusao.html"><span class="rot">← anterior</span>Difusão e o passeio de Pólya</a><a href="referencias.html" style="text-align:right"><span class="rot">próximo →</span>Referências</a></nav>
+<footer>Grupo de pesquisa: L. P. Silva, M. O. Tahim, A. F. Morais (URCA / UECE). Material em construção —
+resultados marcados como preliminares podem mudar.</footer>
+</main>
+</div>
+<script>
+function alternarTema() {
+  var r = document.documentElement, at = r.dataset.theme ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  r.dataset.theme = at === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('tema', r.dataset.theme); } catch (e) {}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Difusão e o passeio de Pólya</title>
+<meta name="description" content="Acima da sela, a dinâmica hamiltoniana gera um passeio aleatório determinístico. Teoria do estado de transição microcanônica, passeios markovianos de referência, recorrência de Pólya e voos de Lévy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+  macros: { R: '\\mathbb{R}', Z: '\\mathbb{Z}', E: '\\mathcal{E}' } },
+  chtml: { scale: 0.98 } };
+try { var t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="index.html"><div class="t1">Dinâmica em potenciais de rede</div>
+  <div class="t2">geometria · caos · transporte</div></a>
+  <ul class="nav">
+    <li><a href="index.html">Apresentação</a></li>
+    <li><a href="reticulados.html"><span class=n>1</span>Reticulados e duais</a></li>
+    <li><a href="anisotropia.html"><span class=n>2</span>Anisotropia e designs</a></li>
+    <li><a href="dinamica.html"><span class=n>3</span>Dinâmica e indicadores</a></li>
+    <li><a href="forma-normal.html"><span class=n>4</span>Forma normal e caos</a></li>
+    <li><a href="difusao.html" class="atual"><span class=n>5</span>Difusão e Pólya</a></li>
+    <li><a href="codigos.html"><span class=n>6</span>Códigos</a></li>
+    <li><a href="referencias.html">Referências</a></li>
+  </ul>
+  <div class="toc"><div class="rot">Nesta página</div>
+    <a href="#contexto">Contexto</a>
+    <a href="#regimes">Três regimes de energia</a>
+    <a href="#observaveis">O que medimos</a>
+    <a href="#tst">Teoria do estado de transição microcanônica</a>
+    <a href="#markov">Passeios markovianos de referência</a>
+    <a href="#polya">Recorrência de Pólya</a>
+    <a href="#preliminares">Resultados preliminares</a>
+  </div>
+  <div class="tema"><button onclick="alternarTema()">claro / escuro</button></div>
+</aside>
+<main>
+<div class="kicker">Módulo 5</div>
+<h1>Difusão e o passeio de Pólya</h1>
+<p class="lead">Acima de \(E_{\rm sep}\) a partícula deixa de ficar confinada e salta de poço em poço. Sem
+nenhum ruído, a dinâmica produz um passeio aleatório no reticulado de períodos. As perguntas são: ele difunde
+normalmente? Quanto ele difere de um passeio markoviano? A geometria (\(t\)) também controla o transporte?</p>
+
+<h2 id="contexto">Contexto</h2>
+<p>A difusão determinística é estudada há décadas em sistemas como o gás de Lorentz periódico
+(Bunimovich e Sinai, 1981) e partículas em potenciais periódicos bidimensionais do tipo “caixa de ovos”, onde
+voos longos produzem transporte anômalo (Geisel, Zacherl e Radons, 1987; revisão em Zaslavsky, 2002; livro de
+Klages, 2007). O potencial cossenoidal do \(A_2\) foi estudado por Acharya e Bagchi (2020), que encontraram uma
+mudança no comportamento da difusão perto da energia de sela. Não encontramos estudos sistemáticos em
+dimensão alta nem nos reticulados de raízes.</p>
+
+<h2 id="regimes">Três regimes de energia</h2>
+<ul>
+<li><b>Saltos raros</b>, \(E\gtrsim E_{\rm sep}\): a partícula passa muito tempo em cada poço e só escapa por
+gargalos estreitos perto das selas.</li>
+<li><b>Intermediário:</b> várias selas abertas; competição entre aprisionamento e voos.</li>
+<li><b>Voo livre</b>, \(E>V_{\max}\): não há barreira em nenhuma direção. \(V_{\max}/E_{\rm sep}\) vale 1,125 no
+\(A_2\), 1,33 no \(D_4\), 2 no \(A_3\) e \(N\) no \(\Z^N\).</li>
+</ul>
+
+<h2 id="observaveis">O que medimos</h2>
+<ul>
+<li><b>Deslocamento quadrático médio</b> \(\langle|\mathbf r(t)-\mathbf r(0)|^2\rangle\propto t^\alpha\): \(\alpha=1\)
+é difusão normal, com \(D=\mathrm{MSD}/(2Nt)\); \(\alpha=2\) é balístico.</li>
+<li><b>Cruzamentos</b> da fronteira da célula de Voronoi do poço atual (taxa \(k_{\rm cross}\)).</li>
+<li><b>Saltos comprometidos:</b> entrada no núcleo (bola de raio \(|\mathbf v_{\min}|/4\)) de um poço diferente do
+último visitado (taxa \(k_c\)). Isso descarta os recruzamentos imediatos.</li>
+<li><b>Tempos de permanência</b> entre saltos e <b>voos</b> (sequências de saltos na mesma direção). Caudas de lei
+de potência indicam voos de Lévy.</li>
+</ul>
+
+<h2 id="tst">Teoria do estado de transição microcanônica</h2>
+<p>Tomamos a célula de Voronoi \(C\) do mínimo como região “reagente” e sua fronteira como superfície divisória.
+A taxa de transição é o fluxo para fora através de \(\partial C\) dividido pelo volume de fase de \(C\) na camada
+de energia \(E\). Com \(K=E-V(\mathbf r)\), as integrais nos momentos são feitas analiticamente:</p>
+\[
+\int d^N p\;\delta\!\Bigl(\tfrac{p^2}{2}-K\Bigr)=\Omega_N\,(2K)^{\frac{N-2}{2}},\qquad
+\int d^N p\;\delta\!\Bigl(\tfrac{p^2}{2}-K\Bigr)(\mathbf p\cdot\hat{\mathbf n})_+=\Omega_N\,c_N\,(2K)^{\frac{N-1}{2}},
+\]
+<p>com \(c_N=\Gamma(N/2)/\bigl(2\sqrt\pi\,\Gamma(\tfrac{N+1}2)\bigr)\) (\(c_2=1/\pi\), \(c_3=1/4\)). Logo</p>
+\[
+k_{\rm TST}(E)=c_N\,\frac{\displaystyle\sum_{\text{faces}}\int_{\rm face}(2K)^{\frac{N-1}{2}}\,dS}
+{\displaystyle\int_C(2K)^{\frac{N-2}{2}}\,dV},\qquad K>0 .
+\]
+<p>O volume é calculado por Monte Carlo na célula fundamental; cada face, por amostragem por importância
+(mistura de uniforme no disco da face com gaussianas centradas nos pontos de menor \(V\) da face). As faces
+correspondem aos <b>vetores relevantes de Voronoi</b> do reticulado de períodos — 240 no \(E_8\), \(n(n+1)\)
+nos \(A_n\), \(2N\) no \(\Z^N\).</p>
+<div class="box def"><span class="tit">Por que a TST é útil aqui</span>
+Numa dinâmica <em>ergódica</em> na camada de energia, a taxa de cruzamento da superfície divisória é exatamente
+\(k_{\rm TST}\). Então: \(k_{\rm cross}/k_{\rm TST}<1\) mede a fração do espaço de fase presa em toros regulares;
+\(\kappa=k_c/k_{\rm TST}\) é o coeficiente de transmissão (recruzamentos). Validação: no \(A_3\) a
+\(1{,}5\,E_{\rm sep}\), \(k_{\rm TST}=0{,}202\pm0{,}001\) e a dinâmica mede \(0{,}196\); os 3% de diferença
+correspondem às órbitas presas.</div>
+
+<h2 id="markov">Passeios markovianos de referência</h2>
+<p>Um passeio markoviano em tempo contínuo com taxa \(k\) e saltos \(\mathbf v\) com probabilidades \(P(\mathbf v)\)
+tem \(D=k\,\langle|\mathbf v|^2\rangle/(2N)\). Usamos dois:</p>
+<ul>
+<li><b>Grafo das selas (TST):</b> saltos aos vizinhos de Voronoi com peso igual ao fluxo TST de cada face:
+\(D_{\rm TST}=c_N\sum_{\mathbf v}F_{\mathbf v}|\mathbf v|^2/(2N\,\Omega)\).</li>
+<li><b>Efetivo:</b> taxa e saltos comprometidos medidos na dinâmica, supostos independentes:
+\(D_M=k_c\langle|\Delta|^2\rangle/(2N)\). A razão \(D/D_M\) mede a correlação entre saltos (\(>1\): voos;
+\(<1\): retroespalhamento), como no tratamento de passeios correlacionados em Klages (2007).</li>
+</ul>
+
+<h2 id="polya">Recorrência de Pólya</h2>
+<p>Pólya (1921) mostrou que o passeio aleatório simples volta à origem com probabilidade 1 em 1 e 2
+dimensões e com probabilidade \(F<1\) em \(d\ge3\). Os valores de \(F\) vêm das integrais de Watson e das
+funções de Green de reticulado: \(F=0{,}3405\) no cúbico simples, \(0{,}2822\) no BCC e \(0{,}2563\) no FCC; a
+generalização para dimensão arbitrária está em Guttmann (2010). O número de sítios distintos visitados em
+\(n\) passos cresce como \(S_n\simeq(1-F)\,n\) para \(d\ge3\) e como \(\pi n/\ln n\) no quadrado.</p>
+<p>Para cada órbita medimos, sobre a sequência de saltos comprometidos, a probabilidade de retorno \(R(n)\) e
+\(S(n)/(n+1)\), e comparamos com o passeio no grafo de vizinhos. Para o \(A_3\) esse grafo é exatamente o FCC,
+e o passeio TST reproduz a constante de Pólya: uma validação embutida.</p>
+
+<h2 id="preliminares">Resultados preliminares</h2>
+<div class="box warn"><span class="tit">Atenção</span>
+Os resultados abaixo vêm de um teste curto (\(T=1000\), 16 órbitas). A rodada completa (13 reticulados, 10
+energias, \(T=2\times10^4\)) está em andamento.</div>
+<ul>
+<li><b>Aprisionamento nos reticulados \(t\ge5\).</b> No \(D_4\) a \(1{,}02\) e \(1{,}05\,E_{\rm sep}\), a TST prevê
+uma taxa de saltos de \(\sim10^{-3}\), mas <em>nenhuma</em> órbita sai do poço: todas ficam em toros regulares.
+A regularidade do regime confinado (Módulo 4) persiste acima da sela.</li>
+<li><b>Difusão fortemente anômala.</b> \(D\) fica de 2 a 60 vezes acima do passeio markoviano e
+\(\alpha\approx1{,}5\)–\(2\): voos retilíneos atravessam dezenas de células.</li>
+<li><b>Perda da recorrência em 2D.</b> No \(A_2\), \(R(n)\) satura perto de 0,27 a \(1{,}1\,E_{\rm sep}\) e é nulo a
+\(3E_{\rm sep}\), enquanto o passeio no mesmo grafo tende a 1, como Pólya prevê.</li>
+</ul>
+<figure class="fig"><img src="img/trajetorias_2d.png" alt="Trajetórias em 2D acima da sela">
+<figcaption><b>Trajetórias em 2D</b> (início de 3 órbitas; contorno preto: \(V=E_{\rm sep}\)). No \(\Z^2\), separável,
+a energia de cada coordenada é conservada: ou a órbita fica presa numa direção, ou voa em linha reta. No
+\(A_2\), saltos erráticos perto da sela convivem com voos longos.</figcaption></figure>
+<figure class="fig"><img src="img/A3_difusao.png" alt="Diagnósticos de difusão para o A3">
+<figcaption><b>\(A_3\) (FCC).</b> (a) MSD; (b) expoente \(\alpha\); (c) \(D\) da dinâmica contra os passeios TST e
+markoviano; (d) taxas relativas à TST e fração de órbitas presas; (e) tempos de permanência; (f) distribuição
+dos voos.</figcaption></figure>
+<figure class="fig"><img src="img/A2_polya.png" alt="Comparação com o passeio de Pólya no A2">
+<figcaption><b>Pólya no \(A_2\).</b> Linhas cheias: dinâmica; tracejadas: passeio no grafo com pesos TST (as curvas
+de todas as energias coincidem, pois as seis faces são equivalentes).</figcaption></figure>
+<div class="box open"><span class="tit">Pergunta central</span>
+A força do design \(t\), que decide o caos no poço, também decide o transporte: difusão normal nos \(t=3\)
+caóticos e transporte anômalo ou bloqueado nos \(t\ge5\)?</div>
+
+<nav class="passo"><a href="forma-normal.html"><span class="rot">← anterior</span>Forma normal e a classificação do caos</a><a href="codigos.html" style="text-align:right"><span class="rot">próximo →</span>Códigos</a></nav>
+<footer>Grupo de pesquisa: L. P. Silva, M. O. Tahim, A. F. Morais (URCA / UECE). Material em construção —
+resultados marcados como preliminares podem mudar.</footer>
+</main>
+</div>
+<script>
+function alternarTema() {
+  var r = document.documentElement, at = r.dataset.theme ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  r.dataset.theme = at === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('tema', r.dataset.theme); } catch (e) {}
+}
+</script>
+</body>
+</html>

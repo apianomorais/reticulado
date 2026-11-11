@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anisotropia local e designs esféricos</title>
+<meta name="description" content="Expansão de Taylor do potencial, designs esféricos e a regra: a primeira anisotropia aparece na ordem t+1, independentemente da forma funcional.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+  macros: { R: '\\mathbb{R}', Z: '\\mathbb{Z}', E: '\\mathcal{E}' } },
+  chtml: { scale: 0.98 } };
+try { var t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="index.html"><div class="t1">Dinâmica em potenciais de rede</div>
+  <div class="t2">geometria · caos · transporte</div></a>
+  <ul class="nav">
+    <li><a href="index.html">Apresentação</a></li>
+    <li><a href="reticulados.html"><span class=n>1</span>Reticulados e duais</a></li>
+    <li><a href="anisotropia.html" class="atual"><span class=n>2</span>Anisotropia e designs</a></li>
+    <li><a href="dinamica.html"><span class=n>3</span>Dinâmica e indicadores</a></li>
+    <li><a href="forma-normal.html"><span class=n>4</span>Forma normal e caos</a></li>
+    <li><a href="difusao.html"><span class=n>5</span>Difusão e Pólya</a></li>
+    <li><a href="codigos.html"><span class=n>6</span>Códigos</a></li>
+    <li><a href="referencias.html">Referências</a></li>
+  </ul>
+  <div class="toc"><div class="rot">Nesta página</div>
+    <a href="#expansao">Expansão em torno da origem</a>
+    <a href="#designs">Designs esféricos</a>
+    <a href="#exemplos">Os casos quadrado e hexagonal</a>
+    <a href="#tabela-t">Força do design dos 30 reticulados</a>
+    <a href="#quartico">O termo quártico isotrópico</a>
+  </div>
+  <div class="tema"><button onclick="alternarTema()">claro / escuro</button></div>
+</aside>
+<main>
+<div class="kicker">Módulo 2</div>
+<h1>Anisotropia local e designs esféricos</h1>
+<p class="lead">Perto do mínimo, todo potencial de rede parece um oscilador isotrópico. A pergunta é: em
+que ordem a simetria discreta do reticulado “aparece”? A resposta é um invariante geométrico de \(S\): a
+força do design esférico.</p>
+
+<h2 id="expansao">Expansão em torno da origem</h2>
+<p>Escreva o potencial como \(V(\mathbf r)=V_0\sum_{\mathbf k\in S} f(\mathbf k\cdot\mathbf r)\) com \(f\) par e
+\(f(0)=0\). Expandindo \(f(s)=\sum_{n\ \text{par}} a_n s^n\),</p>
+\[
+V(\mathbf r)=V_0\sum_{n=2,4,\dots} a_n\, r^n\, P_n(\hat{\mathbf u}),\qquad
+P_n(\hat{\mathbf u})=\sum_{\mathbf k\in S}(\mathbf k\cdot\hat{\mathbf u})^n,\quad \mathbf r=r\hat{\mathbf u}.
+\]
+<p>A <b>forma funcional</b> entra só nos coeficientes \(a_n\); a <b>dependência angular</b> de cada ordem está
+inteiramente em \(P_n\), que depende só de \(S\). Para as três classes estudadas no plano:</p>
+\[
+f_{\cos}(s)=1-\cos s=\tfrac{s^2}{2}-\tfrac{s^4}{24}+\tfrac{s^6}{720}-\cdots,\quad
+f_{\cosh}(s)=\cosh s-1,\quad
+f_{\rm gauss}(s)=1-e^{-s^2/2}.
+\]
+
+<h2 id="designs">Designs esféricos</h2>
+<div class="box def"><span class="tit">Definição (Delsarte, Goethals e Seidel, 1977)</span>
+Um conjunto finito \(X\subset S^{N-1}\) é um <b>\(t\)-design esférico</b> se, para todo polinômio \(p\) de grau
+\(\le t\),
+\[\frac1{|X|}\sum_{\mathbf x\in X}p(\mathbf x)=\int_{S^{N-1}}p\,d\sigma.\]
+A <b>força</b> do design é o maior \(t\) com essa propriedade.</div>
+<p>Aplicando a definição a \(p(\mathbf x)=(\mathbf x\cdot\hat{\mathbf u})^n\), cuja média na esfera não depende de
+\(\hat{\mathbf u}\), concluímos que \(P_n(\hat{\mathbf u})\) é <b>constante</b> para \(n\le t\):</p>
+\[
+P_n(\hat{\mathbf u})=M\,|\mathbf k|^n\,\frac{(n-1)!!}{N(N+2)\cdots(N+n-2)}\qquad(n\le t,\ n\ \text{par}).
+\]
+<p>Como \(S\cup(-S)\) é antipodal, todos os momentos ímpares se anulam e \(t\) é sempre ímpar. Logo:</p>
+<div class="box res"><span class="tit">Regra da primeira anisotropia</span>
+Todos os termos da expansão até a ordem \(t\) são radiais. A primeira dependência angular aparece na ordem
+\(t+1\), <em>para qualquer forma funcional</em> \(f\) com \(a_{t+1}\neq0\).</div>
+
+<h2 id="exemplos">Os casos quadrado e hexagonal</h2>
+<p>Os quatro vetores \(\pm\mathbf e_1,\pm\mathbf e_2\) do \(\Z^2\) formam um 3-design; os seis vetores do \(A_2\)
+(hexágono), um 5-design. Com a normalização \(\sum\mathbf k\mathbf k^{\mathsf T}=\mathbb 1\) e \(\Theta\) medido a
+partir de \(\mathbf b_1\):</p>
+\[
+\begin{aligned}
+V_{\Z^2}^{\cos}&=V_0\Bigl[\tfrac{r^2}{2}-\tfrac{r^4}{96}(3+\cos4\Theta)\Bigr]+O(r^6), &
+V_{A_2}^{\cos}&=V_0\Bigl[\tfrac{r^2}{2}-\tfrac{r^4}{48}+\tfrac{r^6}{25920}(10-\cos6\Theta)\Bigr]+O(r^8),\\
+V_{\Z^2}^{\cosh}&=V_0\Bigl[\tfrac{r^2}{2}+\tfrac{r^4}{96}(3+\cos4\Theta)\Bigr]+O(r^6), &
+V_{A_2}^{\cosh}&=V_0\Bigl[\tfrac{r^2}{2}+\tfrac{r^4}{48}+\tfrac{r^6}{25920}(10-\cos6\Theta)\Bigr]+O(r^8),\\
+V_{\Z^2}^{\rm gauss}&=V_0\Bigl[\tfrac{r^2}{2}-\tfrac{r^4}{32}(3+\cos4\Theta)\Bigr]+O(r^6), &
+V_{A_2}^{\rm gauss}&=V_0\Bigl[\tfrac{r^2}{2}-\tfrac{r^4}{16}+\tfrac{r^6}{1728}(10-\cos6\Theta)\Bigr]+O(r^8).
+\end{aligned}
+\]
+<p>O sinal de \(\cos6\Theta\) depende da convenção: medido a partir de um vetor do dual em vez de um vetor da
+rede, as direções diferem de \(30^\circ\) e o sinal se inverte.</p>
+
+<figure class="fig"><img src="img/curvas_de_nivel.png" alt="Curvas de nível dos potenciais perto da origem">
+<figcaption><b>Curvas de nível perto da origem.</b> Linhas pretas: \(V\) constante; tracejado vermelho: círculos
+(referência isotrópica). No \(\Z^2\) a deformação tem simetria de ordem 4 e já é visível; no \(A_2\) as curvas
+são praticamente circulares, pois a anisotropia só entra em \(r^6\). A forma funcional muda a intensidade,
+não a simetria.</figcaption></figure>
+
+<figure class="fig"><img src="img/anisotropia_ordem.png" alt="Anisotropia de cada ordem e do potencial completo">
+<figcaption><b>(a)</b> Razão entre a amplitude angular e a parte radial de \(P_n\) — idêntica para as três formas
+funcionais. <b>(b)</b> Anisotropia relativa do potencial completo,
+\(\delta(r)=[\max_\Theta V-\min_\Theta V]/(2\langle V\rangle_\Theta)\): cresce como \(r^2\) no \(\Z^2\) e como \(r^4\)
+no \(A_2\).</figcaption></figure>
+
+<figure class="fig"><img src="img/coeficientes.png" alt="Coeficientes da expansão por ordem e forma funcional">
+<figcaption><b>Coeficientes da expansão.</b> A forma funcional altera valor e sinal (barras hachuradas:
+negativos), mas a coluna angular é nula em \(r^4\) no \(A_2\) para as três funções.</figcaption></figure>
+
+<h2 id="tabela-t">Força do design dos 30 reticulados</h2>
+<p>Os vetores mínimos de reticulados com grupos de simetria grandes formam designs de força alta (Venkov,
+2001). Para os nossos casos, calculada numericamente e consistente com a literatura:</p>
+<div class="tabwrap"><table>
+<tr><th>conjunto \(S\cup(-S)\)</th><th>reticulados (potencial)</th><th class="num">\(t\)</th><th>primeira anisotropia</th></tr>
+<tr><td>\(\pm\mathbf e_i\) (politopo cruzado)</td><td>\(\Z^N\), \(D_N\) (\(N\ge5\))</td><td class="num">3</td><td>\(r^4\) (mas separável)</td></tr>
+<tr><td>hexágono</td><td>\(A_2\)</td><td class="num">5</td><td>\(r^6\)</td></tr>
+<tr><td>mínimos de \(A_n^*\), raízes de \(A_n\) (\(n\ge3\))</td><td>\(A_n\), \(A_n^*\)</td><td class="num">3</td><td>\(r^4\)</td></tr>
+<tr><td>raízes de \(D_n\) (\(n\ge5\))</td><td>\(D_n^*\)</td><td class="num">3</td><td>\(r^4\)</td></tr>
+<tr><td>24-células</td><td>\(D_4\)</td><td class="num">5</td><td>\(r^6\)</td></tr>
+<tr><td>raízes / mínimos do dual de \(E_6\), \(E_7\)</td><td>\(E_6,E_6^*,E_7,E_7^*\)</td><td class="num">5</td><td>\(r^6\)</td></tr>
+<tr><td>raízes de \(E_8\)</td><td>\(E_8\)</td><td class="num">7</td><td>\(r^8\)</td></tr>
+</table></div>
+
+<h2 id="quartico">O termo quártico isotrópico</h2>
+<p>Se \(t\ge5\), o termo de quarta ordem é exatamente central. Com \(|\mathbf k|^2=N/M\) (consequência da
+normalização), a fórmula do design dá</p>
+\[
+\sum_{\mathbf k\in S}(\mathbf k\cdot\mathbf r)^4=\frac{3N}{M(N+2)}\,r^4
+\quad\Longrightarrow\quad
+V^{(4)}=-\frac{V_0}{24}\,\frac{3N}{M(N+2)}\,r^4 .
+\]
+<p>Para o \(A_2\) (\(N=2\), \(M=3\)) isso reproduz o \(-r^4/48\) acima. Quando \(t=3\), medimos a anisotropia
+quártica por \(\rho_4=\max P_4/\min P_4\) (tabela do Módulo 1). Essa distinção — quártico central ou não — é o
+que decide o caos a baixa energia (Módulo 4).</p>
+
+<nav class="passo"><a href="reticulados.html"><span class="rot">← anterior</span>Reticulados, duais e o potencial</a><a href="dinamica.html" style="text-align:right"><span class="rot">próximo →</span>Dinâmica confinada e indicadores de caos</a></nav>
+<footer>Grupo de pesquisa: L. P. Silva, M. O. Tahim, A. F. Morais (URCA / UECE). Material em construção —
+resultados marcados como preliminares podem mudar.</footer>
+</main>
+</div>
+<script>
+function alternarTema() {
+  var r = document.documentElement, at = r.dataset.theme ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  r.dataset.theme = at === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('tema', r.dataset.theme); } catch (e) {}
+}
+</script>
+</body>
+</html>

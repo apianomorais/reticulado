@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Referências</title>
+<meta name="description" content="Referências sobre reticulados, designs esféricos, dinâmica hamiltoniana, indicadores de caos, forma normal, teoria do estado de transição, difusão determinística e passeios aleatórios.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+<script>
+window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']],
+  macros: { R: '\\mathbb{R}', Z: '\\mathbb{Z}', E: '\\mathcal{E}' } },
+  chtml: { scale: 0.98 } };
+try { var t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <a class="brand" href="index.html"><div class="t1">Dinâmica em potenciais de rede</div>
+  <div class="t2">geometria · caos · transporte</div></a>
+  <ul class="nav">
+    <li><a href="index.html">Apresentação</a></li>
+    <li><a href="reticulados.html"><span class=n>1</span>Reticulados e duais</a></li>
+    <li><a href="anisotropia.html"><span class=n>2</span>Anisotropia e designs</a></li>
+    <li><a href="dinamica.html"><span class=n>3</span>Dinâmica e indicadores</a></li>
+    <li><a href="forma-normal.html"><span class=n>4</span>Forma normal e caos</a></li>
+    <li><a href="difusao.html"><span class=n>5</span>Difusão e Pólya</a></li>
+    <li><a href="codigos.html"><span class=n>6</span>Códigos</a></li>
+    <li><a href="referencias.html" class="atual">Referências</a></li>
+  </ul>
+  <div class="toc"><div class="rot">Nesta página</div>
+    <a href="#reticulados">Reticulados e designs esféricos</a>
+    <a href="#kk">Origem do potencial</a>
+    <a href="#hamiltoniana">Dinâmica hamiltoniana, KAM e forma normal</a>
+    <a href="#numerica">Integração numérica e indicadores de caos</a>
+    <a href="#transporte">Transporte, estado de transição e passeios aleatórios</a>
+  </div>
+  <div class="tema"><button onclick="alternarTema()">claro / escuro</button></div>
+</aside>
+<main>
+<div class="kicker">Bibliografia</div>
+<h1>Referências</h1>
+<p class="lead">Organizadas por tema. Entre colchetes, os módulos em que cada referência é usada.</p>
+
+<h2 id="reticulados">Reticulados e designs esféricos</h2>
+<ol class="refs">
+<li>J. H. Conway e N. J. A. Sloane, <i>Sphere Packings, Lattices and Groups</i>, 3ª ed. Springer, 1999. <span class="chave">[1, 2]</span></li>
+<li>P. Delsarte, J.-M. Goethals e J. J. Seidel, “Spherical codes and designs”, <i>Geometriae Dedicata</i> 6, 363–388 (1977). <span class="chave">[2]</span></li>
+<li>B. Venkov, “Réseaux et designs sphériques”, em <i>Réseaux euclidiens, designs sphériques et formes modulaires</i>, Monogr. Enseign. Math. 37, 10–86 (2001). <span class="chave">[2]</span></li>
+<li>E. Bannai e E. Bannai, “A survey on spherical designs and algebraic combinatorics on spheres”, <i>European J. Combin.</i> 30, 1392–1425 (2009). <span class="chave">[2]</span></li>
+<li>A. K. Lenstra, H. W. Lenstra Jr. e L. Lovász, “Factoring polynomials with rational coefficients”, <i>Math. Ann.</i> 261, 515–534 (1982). <span class="chave">[3, 5]</span></li>
+<li>L. Babai, “On Lovász’ lattice reduction and the nearest lattice point problem”, <i>Combinatorica</i> 6, 1–13 (1986). <span class="chave">[5]</span></li>
+</ol>
+
+<h2 id="kk">Origem do potencial</h2>
+<ol class="refs" start="7">
+<li>T. Kaluza, “Zum Unitätsproblem der Physik”, <i>Sitzungsber. Preuss. Akad. Wiss.</i>, 966–972 (1921). <span class="chave">[1]</span></li>
+<li>O. Klein, “Quantentheorie und fünfdimensionale Relativitätstheorie”, <i>Z. Phys.</i> 37, 895–906 (1926). <span class="chave">[1]</span></li>
+<li>D. Bailin e A. Love, “Kaluza–Klein theories”, <i>Rep. Prog. Phys.</i> 50, 1087–1170 (1987). <span class="chave">[1]</span></li>
+</ol>
+
+<h2 id="hamiltoniana">Dinâmica hamiltoniana, KAM e forma normal</h2>
+<ol class="refs" start="10">
+<li>V. I. Arnold, <i>Mathematical Methods of Classical Mechanics</i>, 2ª ed. Springer, 1989. <span class="chave">[3, 4]</span></li>
+<li>A. J. Lichtenberg e M. A. Lieberman, <i>Regular and Chaotic Dynamics</i>, 2ª ed. Springer, 1992. <span class="chave">[3, 4]</span></li>
+<li>G. Contopoulos, <i>Order and Chaos in Dynamical Astronomy</i>. Springer, 2002. <span class="chave">[4]</span></li>
+<li>G. D. Birkhoff, <i>Dynamical Systems</i>. AMS Colloquium Publications IX, 1927. <span class="chave">[4]</span></li>
+<li>F. G. Gustavson, “On constructing formal integrals of a Hamiltonian system near an equilibrium point”, <i>Astron. J.</i> 71, 670–686 (1966). <span class="chave">[4]</span></li>
+<li>M. Hénon e C. Heiles, “The applicability of the third integral of motion: some numerical experiments”, <i>Astron. J.</i> 69, 73–79 (1964). <span class="chave">[4]</span></li>
+<li>A. Ambrosetti e P. H. Rabinowitz, “Dual variational methods in critical point theory and applications”, <i>J. Funct. Anal.</i> 14, 349–381 (1973). <span class="chave">[3]</span></li>
+</ol>
+
+<h2 id="numerica">Integração numérica e indicadores de caos</h2>
+<ol class="refs" start="17">
+<li>L. Verlet, “Computer ‘experiments’ on classical fluids. I”, <i>Phys. Rev.</i> 159, 98–103 (1967). <span class="chave">[3]</span></li>
+<li>E. Hairer, C. Lubich e G. Wanner, <i>Geometric Numerical Integration</i>, 2ª ed. Springer, 2006. <span class="chave">[3]</span></li>
+<li>G. Benettin, L. Galgani, A. Giorgilli e J.-M. Strelcyn, “Lyapunov characteristic exponents for smooth dynamical systems and for Hamiltonian systems; a method for computing all of them”, <i>Meccanica</i> 15, 9–20 e 21–30 (1980). <span class="chave">[3]</span></li>
+<li>Ya. B. Pesin, “Characteristic Lyapunov exponents and smooth ergodic theory”, <i>Russian Math. Surveys</i> 32(4), 55–114 (1977). <span class="chave">[3]</span></li>
+<li>Ch. Skokos, “Alignment indices: a new, simple method for determining the ordered or chaotic nature of orbits”, <i>J. Phys. A</i> 34, 10029–10043 (2001). <span class="chave">[3]</span></li>
+<li>Ch. Skokos, T. Bountis e Ch. Antonopoulos, “Geometrical properties of local dynamics in Hamiltonian systems: the Generalized Alignment Index (GALI) method”, <i>Physica D</i> 231, 30–54 (2007). <span class="chave">[3]</span></li>
+<li>J. Laskar, C. Froeschlé e A. Celletti, “The measure of chaos by the numerical analysis of the fundamental frequencies”, <i>Physica D</i> 56, 253–269 (1992). <span class="chave">[3]</span></li>
+<li>J. Laskar, “Frequency analysis for multi-dimensional systems. Global dynamics and diffusion”, <i>Physica D</i> 67, 257–281 (1993). <span class="chave">[3]</span></li>
+</ol>
+
+<h2 id="transporte">Transporte, estado de transição e passeios aleatórios</h2>
+<ol class="refs" start="25">
+<li>E. Wigner, “The transition state method”, <i>Trans. Faraday Soc.</i> 34, 29–41 (1938). <span class="chave">[5]</span></li>
+<li>J. C. Keck, “Variational theory of reaction rates”, <i>Adv. Chem. Phys.</i> 13, 85–121 (1967). <span class="chave">[5]</span></li>
+<li>D. G. Truhlar, B. C. Garrett e S. J. Klippenstein, “Current status of transition-state theory”, <i>J. Phys. Chem.</i> 100, 12771–12800 (1996). <span class="chave">[5]</span></li>
+<li>L. A. Bunimovich e Ya. G. Sinai, “Statistical properties of Lorentz gas with periodic configuration of scatterers”, <i>Commun. Math. Phys.</i> 78, 479–497 (1981). <span class="chave">[5]</span></li>
+<li>T. Geisel, A. Zacherl e G. Radons, “Generic 1/f noise in chaotic Hamiltonian dynamics”, <i>Phys. Rev. Lett.</i> 59, 2503–2506 (1987). <span class="chave">[5]</span></li>
+<li>G. M. Zaslavsky, “Chaos, fractional kinetics, and anomalous transport”, <i>Phys. Rep.</i> 371, 461–580 (2002). <span class="chave">[5]</span></li>
+<li>R. Klages, <i>Microscopic Chaos, Fractals and Transport in Nonequilibrium Statistical Mechanics</i>. World Scientific, 2007. <span class="chave">[5]</span></li>
+<li>S. Acharya e B. Bagchi, “Study of entropy-diffusion relation in a deterministic Hamiltonian system through microscopic analysis”, <a href="https://arxiv.org/abs/2001.09132">arXiv:2001.09132</a> (2020). <span class="chave">[5]</span></li>
+<li>G. Pólya, “Über eine Aufgabe der Wahrscheinlichkeitsrechnung betreffend die Irrfahrt im Straßennetz”, <i>Math. Ann.</i> 84, 149–160 (1921). <span class="chave">[5]</span></li>
+<li>G. N. Watson, “Three triple integrals”, <i>Q. J. Math.</i> 10, 266–276 (1939). <span class="chave">[5]</span></li>
+<li>E. W. Montroll, “Random walks in multidimensional spaces, especially on periodic lattices”, <i>J. SIAM</i> 4, 241–260 (1956). <span class="chave">[5]</span></li>
+<li>A. J. Guttmann, “Lattice Green functions in all dimensions”, <i>J. Phys. A</i> 43, 305205 (2010); <a href="https://arxiv.org/abs/1004.1435">arXiv:1004.1435</a>. <span class="chave">[5]</span></li>
+</ol>
+
+<nav class="passo"><a href="codigos.html"><span class="rot">← anterior</span>Códigos</a><span></span></nav>
+<footer>Grupo de pesquisa: L. P. Silva, M. O. Tahim, A. F. Morais (URCA / UECE). Material em construção —
+resultados marcados como preliminares podem mudar.</footer>
+</main>
+</div>
+<script>
+function alternarTema() {
+  var r = document.documentElement, at = r.dataset.theme ||
+    (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  r.dataset.theme = at === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('tema', r.dataset.theme); } catch (e) {}
+}
+</script>
+</body>
+</html>
