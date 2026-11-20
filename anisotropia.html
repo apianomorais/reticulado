@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Anisotropia local e designs esféricos</title>
-<meta name="description" content="Expansão de Taylor do potencial, designs esféricos e a regra: a primeira anisotropia aparece na ordem t+1, independentemente da forma funcional.">
+<meta name="description" content="Expansão de Taylor do potencial, designs esféricos, a regra da primeira anisotropia na ordem t+1, e a ponte com número de beijos e empacotamento de esferas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -38,6 +38,8 @@ try { var t = localStorage.getItem('tema'); if (t) document.documentElement.data
     <a href="#exemplos">Os casos quadrado e hexagonal</a>
     <a href="#tabela-t">Força do design dos 30 reticulados</a>
     <a href="#quartico">O termo quártico isotrópico</a>
+    <a href="#beijos">Força, beijos e designs justos</a>
+    <a href="#empacotamento">A ponte com empacotamento</a>
   </div>
   <div class="tema"><button onclick="alternarTema()">claro / escuro</button></div>
 </aside>
@@ -135,8 +137,94 @@ normalização), a fórmula do design dá</p>
 V^{(4)}=-\frac{V_0}{24}\,\frac{3N}{M(N+2)}\,r^4 .
 \]
 <p>Para o \(A_2\) (\(N=2\), \(M=3\)) isso reproduz o \(-r^4/48\) acima. Quando \(t=3\), medimos a anisotropia
-quártica por \(\rho_4=\max P_4/\min P_4\) (tabela do Módulo 1). Essa distinção — quártico central ou não — é o
+quártica por \(\rho_4=\max P_4/\min P_4\) (tabela do Módulo 1). Essa distinção, quártico central ou não, é o
 que decide o caos a baixa energia (Módulo 4).</p>
+
+
+<h2 id="beijos">Força, número de beijos e designs justos</h2>
+<p>O conjunto \(X=S\cup(-S)\) não é um conjunto qualquer de pontos na esfera: ele é o conjunto dos vetores
+mínimos do reticulado dual. O seu tamanho tem nome próprio em geometria dos números. É o
+<b>número de beijos</b> de \(\Lambda^*\), isto é, quantas esferas iguais tocam uma esfera central no
+empacotamento associado. A nossa contagem por pares dá \(|X|=2M\).</p>
+
+<p>Isso liga a força \(t\) a uma grandeza de empacotamento por uma desigualdade, e a desigualdade aperta
+rápido. Delsarte, Goethals e Seidel provaram que um design antipodal de força \(t=2e+1\) em \(S^{N-1}\)
+precisa de pelo menos</p>
+\[
+|X|\ \ge\ 2\binom{N+e-1}{e}
+\]
+<p>pontos. Para \(t\ge5\), que é a condição de isotropia do termo quártico da seção anterior, isso dá
+\(|X|\ge N(N+1)\), ou \(M\ge N(N+1)/2\).</p>
+
+<div class="box res"><span class="tit">Força custa vizinhos</span>
+Não existe reticulado com poucos vetores mínimos e termo quártico isotrópico. A classe regular é, por
+necessidade geométrica, a dos reticulados densamente cercados: o \(\Z^N\) tem \(2N\) vizinhos e nunca passa
+de \(t=3\), enquanto o \(E_8\) tem 240 e chega a \(t=7\).
+</div>
+
+<p>Alguns conjuntos atingem a igualdade, e aí o design se diz <b>justo</b>: ele consegue a força que tem com
+o menor número de pontos que a dimensão permite. Entre os nossos, quatro são justos.</p>
+
+<div class="tabwrap"><table>
+<tr><th>potencial</th><th class="num">\(N\)</th><th class="num">beijos \(|X|\)</th><th class="num">\(t\)</th>
+<th class="num">cota de Delsarte</th><th class="num">razão</th></tr>
+<tr><td>\(A_2\) (hexagonal)</td><td class="num">2</td><td class="num">6</td><td class="num">5</td><td class="num">6</td><td class="num"><b>1,00</b></td></tr>
+<tr><td>\(D_4\)</td><td class="num">4</td><td class="num">24</td><td class="num">5</td><td class="num">20</td><td class="num">1,20</td></tr>
+<tr><td>\(E_6\)</td><td class="num">6</td><td class="num">54</td><td class="num">5</td><td class="num">42</td><td class="num">1,29</td></tr>
+<tr><td>\(E_6^*\)</td><td class="num">6</td><td class="num">72</td><td class="num">5</td><td class="num">42</td><td class="num">1,71</td></tr>
+<tr><td>\(E_7\)</td><td class="num">7</td><td class="num">56</td><td class="num">5</td><td class="num">56</td><td class="num"><b>1,00</b></td></tr>
+<tr><td>\(E_7^*\)</td><td class="num">7</td><td class="num">126</td><td class="num">5</td><td class="num">56</td><td class="num">2,25</td></tr>
+<tr><td>\(E_8\)</td><td class="num">8</td><td class="num">240</td><td class="num">7</td><td class="num">240</td><td class="num"><b>1,00</b></td></tr>
+<tr><td>\(\Lambda_{24}\) (Leech)</td><td class="num">24</td><td class="num">196 560</td><td class="num">11</td><td class="num">196 560</td><td class="num"><b>1,00</b></td></tr>
+</table></div>
+
+<p>As duas últimas linhas merecem atenção. O \(E_8\) e o Leech conseguem força 7 e força 11 com exatamente o
+número mínimo de vizinhos, e são precisamente os dois reticulados cuja otimalidade de empacotamento foi
+provada, em 2016 e 2017, por Viazovska e pelo grupo de Cohn, Kumar, Miller, Radchenko e Viazovska. O mesmo
+par aparece aqui como os casos de maior força. A coincidência não é acidental, e a seção seguinte diz por
+quê. O \(\Lambda_{24}\) está fora dos trinta reticulados de 2 a 8 dimensões que integramos
+sistematicamente; ele entra nas rodadas de dimensão alta.</p>
+
+<h2 id="empacotamento">A ponte com empacotamento de esferas</h2>
+<p>A ligação entre força do design e qualidade do empacotamento não é apenas uma desigualdade de contagem.
+Ela é um teorema, e ele transforma o nosso critério dinâmico num critério de geometria dos números.</p>
+
+<div class="box def"><span class="tit">Fortemente perfeito (Venkov, 2001)</span>
+Um reticulado é <b>fortemente perfeito</b> quando os seus vetores mínimos formam um 4-design esférico, o que
+pela antipodalidade equivale a um 5-design. Venkov provou que todo reticulado fortemente perfeito é perfeito
+e eutático, e portanto <b>extremo</b>: um máximo local da densidade de empacotamento no espaço das formas.
+</div>
+
+<p>Junte isso ao critério do módulo 4. Para um potencial não separável com \(N\ge3\), o movimento a baixa
+energia é regular exatamente quando \(t\ge5\) entre os vetores mínimos de \(\Lambda^*\). As duas frases
+dizem a mesma coisa:</p>
+
+<div class="box res"><span class="tit">O critério dinâmico é um critério de empacotamento</span>
+O movimento perto do fundo do poço é regular <b>se e somente se</b> o reticulado dual \(\Lambda^*\) é
+fortemente perfeito, isto é, localmente ótimo como empacotamento de esferas. A dinâmica de uma partícula
+clássica está lendo a qualidade do empacotamento associado à sua rede de períodos.
+</div>
+
+<p>Nebe e Venkov classificaram os reticulados fortemente perfeitos de dimensão baixa, e a classificação é
+completa até a dimensão 13. Ela não contém nenhum reticulado nas dimensões <b>3, 5, 9, 11 e 13</b>. A
+tradução dinâmica é direta e é uma previsão que não envolve integrar nada: nessas dimensões, nenhum potencial
+não separável da família se move regularmente a baixa energia.</p>
+
+<div class="box warn"><span class="tit">A implicação vale num sentido só</span>
+Ser denso não basta. O FCC é o empacotamento de reticulado mais denso em três dimensões, e ainda assim os
+seus doze vetores mínimos formam apenas um 3-design: o potencial que os usa é caótico. O mesmo vale para o
+\(D_5\), o mais denso em cinco dimensões. O que decide não é <em>quantos</em> vizinhos existem, e sim quão
+uniformemente eles cercam a esfera, que é justamente o que \(t\) mede e a densidade não vê.
+</div>
+
+<p>Vale notar que a mesma exigência de isotropia até a quarta ordem reaparece em dois problemas sem
+parentesco aparente com este. Em gases de rede e em métodos de lattice Boltzmann, o tensor de velocidades de
+quarta ordem precisa ser isotrópico para que o limite hidrodinâmico dê as equações de Navier-Stokes: a rede
+quadrada falha por esse motivo e a hexagonal funciona, e os modelos tridimensionais tomam emprestadas as 24
+raízes do \(D_4\). Em minimização de energia, Sarnak e Strömbergsson mostraram que \(D_4\), \(E_8\) e
+\(\Lambda_{24}\) são mínimos locais da função zeta de Epstein, e Coulangeon provou que todo reticulado cujas
+camadas formam 4-designs tem essa propriedade. Nos três problemas, o que importa é isotropia até a quarta
+ordem.</p>
 
 <nav class="passo"><a href="reticulados.html"><span class="rot">← anterior</span>Reticulados, duais e o potencial</a><a href="dinamica.html" style="text-align:right"><span class="rot">próximo →</span>Dinâmica confinada e indicadores de caos</a></nav>
 <footer>Grupo de pesquisa: L. P. Silva, M. O. Tahim, A. F. Morais (URCA / UECE). Material em
